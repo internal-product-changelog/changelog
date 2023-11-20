@@ -17,9 +17,10 @@ headers = {
 # # Open and read the file
 # json_data = File.read(file_path)
 
-# release_text = ARGV[0] || ''
+release_text = ARGV[0] || ''
 # # release_text = json_data
 # release_data = JSON.parse(release_text)
+puts release_text
 
 release_name = ENV['RELEASE_NAME']
 release_tag = ENV['RELEASE_TAG']
