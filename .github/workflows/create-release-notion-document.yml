@@ -49,7 +49,8 @@ jobs:
           github_headers="Authorization: Bearer $github_token"
           github_response=$(curl -sS --http1.1 -X POST -H "$github_headers" -d "{\"query\":\"$query\"}" $github_api_url)
           
-          echo "$github_response"
+          echo "Raw GitHub API Response:"
+          echo "$github_response | jq ."
 
           error_message=$(echo "$github_response" | jq -r '.errors[0].message')
           if [ ! -z "$error_message" ] && [ "$error_message" != "null" ]; then
