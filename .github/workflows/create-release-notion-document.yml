@@ -57,6 +57,8 @@ jobs:
             exit 1
           fi
 
+          ruby -rjson -e "puts 'Parsing JSON...'; parsed_response = JSON.parse('$github_response'); puts 'Parsed successfully.'; puts parsed_response"
+
           # Extract individual fields from the JSON response
           release_name=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].name')
           release_tag=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].tagName')
