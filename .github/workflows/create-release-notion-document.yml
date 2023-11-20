@@ -40,7 +40,7 @@ jobs:
           GRAPHQL
           )
 
-          github_token="${{ secrets.YOUR_ACCESS_TOKEN }}"
+          github_token="${{ secrets.GITHUB_TOKEN }}"
 
           github_headers="Authorization: Bearer $github_token
           Content-Type: application/json
