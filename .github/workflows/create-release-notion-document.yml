@@ -24,7 +24,7 @@ jobs:
           gem install bundler
           bundle install
 
-      - name: Query GitHub GraphQL API
+      - name: Query GitHub REST API
         id: get-release
         run: |
           github_api_url="https://api.github.com/repos/internal-product-changelog/changelog/releases"
@@ -37,7 +37,7 @@ jobs:
           
           echo "Raw GitHub API Response:"
           echo "$github_response"
-          
+
           # Extract individual fields from the JSON response
           release_name=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].name')
           release_tag=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].tagName')
