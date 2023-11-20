@@ -7,8 +7,13 @@ on:
 
 
 jobs:
-  get-release:
+  create-release-notion:
     runs-on: ubuntu-latest
+
+    - name: Install Dependencies
+      run: |
+      gem install bundler
+      bundle install
 
     steps:
       - name: Checkout repository
