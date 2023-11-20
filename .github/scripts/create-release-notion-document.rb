@@ -3,7 +3,6 @@ require 'json'
 
 NOTION_API_ENDPOINT = 'https://api.notion.com/v1/pages'
 NOTION_DATABASE_ID = '8b7bd720c2d043698ecaea9a8d5adb16'
-# NOTION_API_TOKEN = ENV['NOTION_API_TOKEN']
 NOTION_API_TOKEN = 'secret_2fTj1Crwbhou0S0obTBvdvYHrZRf2U7VhlP8oK2FKfx'
 
 # Create Notion API headers with integration token
@@ -13,10 +12,10 @@ headers = {
 	'Notion-Version' => '2022-06-28'
 }
 
-file_path = '.github/scripts/sample_release.json'
+# file_path = '.github/scripts/sample_release.json'
 
-# Open and read the file
-json_data = File.read(file_path)
+# # Open and read the file
+# json_data = File.read(file_path)
 
 release_text = ARGV[0] || ''
 # release_text = json_data
