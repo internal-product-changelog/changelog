@@ -1,0 +1,49 @@
+jobs:
+  create-notion-document:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: actions/setup-ruby@v3
+        with:
+          ruby-version: 2.7
+
+      - name: Install Dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Fetch GitHub Release Text
+        run: |
+          github_api_url="https://api.github.com/graphql"
+          query=$(cat <<'GRAPHQL'
+            query {
+              repository(owner: "internal-product-changelog", name: "changelog") {
+                releases(last: 1) {
+                  nodes {
+                    body
+                  }
+                }
+              }
+            }
+          GRAPHQL
+          )
+
+          github_headers="Authorization: Bearer $YOUR_ACCESS_TOKEN
+          Content-Type: application/json
+          Accept: application/json"
+
+          github_response=$(curl -sS -X POST -H "$github_headers" -d "{\"query\":\"$query\"}" $github_api_url)
+          release_text=$(ruby -e 'require "json"; data = JSON.parse(STDIN.read); puts data["data"]["repository"]["releases"]["nodes"][0]["body"]' <<< "$github_response")
+
+          echo "::set-output name=release_text::$release_text"
+        env:
+          YOUR_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Script
+        run: ruby .github/scripts/create-notion-document.rb ${{ env.release_text }}
+        env:
+          NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
