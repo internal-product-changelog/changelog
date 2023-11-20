@@ -9,11 +9,8 @@ on:
 jobs:
     use_api:
       runs-on: ubuntu-latest
-      permissions:
-        releases: read
 
       steps:
-
         - name: Checkout repository
           uses: actions/checkout@v2
 
