@@ -12,62 +12,62 @@ jobs:
       permissions:
         issues: read
 
-    steps:
-      - env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api repos/internal-product-changelog/changelog/releases/latest
+      steps:
+        - env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            gh api repos/internal-product-changelog/changelog/releases/latest
 
-      - name: Checkout repository
-        uses: actions/checkout@v2
+        - name: Checkout repository
+          uses: actions/checkout@v2
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.2.2
+        - name: Set up Ruby
+          uses: ruby/setup-ruby@v1
+          with:
+            ruby-version: 3.2.2
 
-      # - name: Install Dependencies
-      #   run: |
-      #     gem install bundler
-      #     bundle install
+        # - name: Install Dependencies
+        #   run: |
+        #     gem install bundler
+        #     bundle install
 
-      - name: Query GitHub REST API
-        id: get-release
-        run: |
-          github_api_url="https://api.github.com/repos/internal-product-changelog/changelog/releases/latest"
+        - name: Query GitHub REST API
+          id: get-release
+          run: |
+            github_api_url="https://api.github.com/repos/internal-product-changelog/changelog/releases/latest"
 
-          github_token="${{ secrets.GH_TOKEN }}"
-          github_headers="Authorization: Bearer $github_token
-                          Accept: application/vnd.github.v3+json
-                          X-GitHub-Api-Version: 2022-11-28"
-          github_response=$(curl -sS --http1.1 -H "$github_headers" $github_api_url)
-          
-          echo "Raw GitHub API Response:"
-          echo "$github_response"
+            github_token="${{ secrets.GH_TOKEN }}"
+            github_headers="Authorization: Bearer $github_token
+                            Accept: application/vnd.github.v3+json
+                            X-GitHub-Api-Version: 2022-11-28"
+            github_response=$(curl -sS --http1.1 -H "$github_headers" $github_api_url)
+            
+            echo "Raw GitHub API Response:"
+            echo "$github_response"
 
-          # Extract individual fields from the JSON response
-          release_name=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].name')
-          release_tag=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].tagName')
-          release_description=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].description')
-          release_created_at=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].createdAt')
+            # Extract individual fields from the JSON response
+            release_name=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].name')
+            release_tag=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].tagName')
+            release_description=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].description')
+            release_created_at=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].createdAt')
 
-          # Set individual environment variables
-          echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
-          echo "RELEASE_TAG=$release_tag" >> $GITHUB_ENV
-          echo "RELEASE_DESCRIPTION=$release_description" >> $GITHUB_ENV
-          echo "RELEASE_CREATED_AT=$release_created_at" >> $GITHUB_ENV
+            # Set individual environment variables
+            echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
+            echo "RELEASE_TAG=$release_tag" >> $GITHUB_ENV
+            echo "RELEASE_DESCRIPTION=$release_description" >> $GITHUB_ENV
+            echo "RELEASE_CREATED_AT=$release_created_at" >> $GITHUB_ENV
 
-      - name: Run Ruby Script
-        run: |
-          # Access individual environment variables
-          release_name="${RELEASE_NAME}"
-          release_tag="${RELEASE_TAG}"
-          release_description="${RELEASE_DESCRIPTION}"
-          release_created_at="${RELEASE_CREATED_AT}"
+        - name: Run Ruby Script
+          run: |
+            # Access individual environment variables
+            release_name="${RELEASE_NAME}"
+            release_tag="${RELEASE_TAG}"
+            release_description="${RELEASE_DESCRIPTION}"
+            release_created_at="${RELEASE_CREATED_AT}"
 
-          echo "Release Name: $release_name"
-          echo "Release Tag: $release_tag"
-          echo "Release Description: $release_description"
-          echo "Release Created At: $release_created_at"
+            echo "Release Name: $release_name"
+            echo "Release Tag: $release_tag"
+            echo "Release Description: $release_description"
+            echo "Release Created At: $release_created_at"
 
-          ruby .github/scripts/create-release-notion-document.rb "$release_info"
+            ruby .github/scripts/create-release-notion-document.rb "$release_info"
