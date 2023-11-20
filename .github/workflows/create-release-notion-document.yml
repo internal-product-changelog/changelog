@@ -54,7 +54,8 @@ jobs:
       - name: Parse JSON and Print Release Body
         run: |
           # Parse the JSON data received from the previous step
-          release_text=$(echo "${{ steps.get-release.outputs.release_json }}" | ruby -e 'require "json"; data = JSON.parse(STDIN.read); puts data["data"]["repository"]["releases"]["nodes"][0]["body"]')
+          # release_text=$(echo "${{ steps.get-release.outputs.release_json }}" | ruby -e 'require "json"; data = JSON.parse(STDIN.read); puts data["data"]["repository"]["releases"]["nodes"][0]["body"]')
+          release_text=$(echo "${{ steps.get-release.outputs.release_json }}" | ruby -e 'require "json"; data = JSON.parse(STDIN.read); puts data')
 
           # Print the parsed release text
           echo "Parsed Release Body:"
