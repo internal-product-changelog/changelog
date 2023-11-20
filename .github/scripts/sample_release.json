@@ -1,0 +1,8 @@
+{
+  "title": "# Release Note | v.1.11.104",
+  "new_features": "## New Features\n- Feature 1\n- Feature 2",
+  "enhancements": "## Enhancements\n- Enhancement 1\n- Enhancement 2",
+  "fixed_bugs": "## Fixed Bugs\n- Bug Fix 1\n- Bug Fix 2",
+  "notes": "## Notes\nSome important notes here...",
+  "contributors": "## Contributors\n- John Doe\n- Jane Smith"
+}
