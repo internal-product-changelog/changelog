@@ -24,7 +24,8 @@ jobs:
           gem install bundler
           bundle install
 
-      - name: Fetch GitHub Release Text
+      - name: Query GitHub GraphQL API
+        id: get-release
         run: |
           github_api_url="https://api.github.com/graphql"
           query=$(cat <<'GRAPHQL'
@@ -32,7 +33,10 @@ jobs:
               repository(owner: "internal-product-changelog", name: "changelog") {
                 releases(last: 1) {
                   nodes {
-                    body
+                    name
+                    tagName
+                    description
+                    createdAt
                   }
                 }
               }
@@ -49,19 +53,14 @@ jobs:
           github_response=$(curl -sS --http1.1 -X POST -H "$github_headers" -d "{\"query\":\"$query\"}" $github_api_url)
           
           # Set the JSON data as an output
-          echo "::set-output name=release_json::$github_response"
+          echo "::set-output name=release_info::$github_response"
 
-      - name: Parse JSON and Print Release Body
+      - name: Run Ruby Script
         run: |
-          # Parse the JSON data received from the previous step
-          # release_text=$(echo "${{ steps.get-release.outputs.release_json }}" | ruby -e 'require "json"; data = JSON.parse(STDIN.read); puts data["data"]["repository"]["releases"]["nodes"][0]["body"]')
-          release_text=$(echo "${{ steps.get-release.outputs.release_json }}" | ruby -e 'require "json"; data = JSON.parse(STDIN.read); puts data')
+          # release_info=$(echo "${{ steps.get-release.outputs.release_info }}" | ruby -e 'require "json"; data = JSON.parse(STDIN.read); puts data["data"]["repository"]["releases"]["nodes"][0]')
+          release_info=$(echo "${{ steps.get-release.outputs.release_info }}" | jq .)
 
-          # Print the parsed release text
           echo "Parsed Release Body:"
-          echo "$release_text"
+          echo "$release_info"
 
-      - name: Run Script
-        run: ruby .github/scripts/create-release-notion-document.rb ${{ env.release_text }}
-        env:
-          NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
+          ruby .github/scripts/create-release-notion-document.rb "$release_info"
