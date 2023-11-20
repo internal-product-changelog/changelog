@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Set up Ruby
-        uses: actions/setup-ruby@v3
+        uses: ruby/setup-ruby@v2
         with:
           ruby-version: 3.2.2
 
