@@ -23,33 +23,29 @@ release_tag = data['tag_name']
 release_description = data['body']
 release_created_at = data['created_at']
 
-# Print or use the extracted fields as needed
-puts "Release Name: #{release_name}"
-puts "Release Tag: #{release_tag}"
-puts "Release Description: #{release_description}"
-puts "Release Created At: #{release_created_at}"
+# Splitting the string into an array of sections based on '#'
+sections = release_description.split(/\n#/)
+
+# Displaying each section
+sections.each do |section|
+  puts section.strip  # Using strip to remove leading/trailing whitespaces
+end
 
 # Extract information from the release data
-# title = release_data['title'] || ''
-# new_features = release_data['new_features'] || ''
-# enhancements = release_data['enhancements'] || ''
-# fixed_bugs = release_data['fixed_bugs'] || ''
-# notes = release_data['notes'] || ''
-# contributors = release_data['contributors'] || ''
+title = sections[1] || ''
+# new_features = data['new_features'] || ''
+# enhancements = data['enhancements'] || ''
+# fixed_bugs = data['fixed_bugs'] || ''
+# notes = data['notes'] || ''
+# contributors = data['contributors'] || ''
+puts title
 
 
 # Create Notion page
-
 request_body = {
-	cover: {
-		type: 'external',
-		external: {
-		url: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Tuscankale.jpg'
-		}
-	},
 	icon: {
 		type: 'emoji',
-		emoji: '🥬'
+		emoji: '🗒️'
 	},
 	parent: {
 		type: 'database_id',
