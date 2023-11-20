@@ -49,7 +49,7 @@ jobs:
           github_headers="Authorization: Bearer $github_token"
           github_response=$(curl -sS --http1.1 -X POST -H "$github_headers" -d "{\"query\":\"$query\"}" $github_api_url)
           
-          echo github_response
+          echo "$github_response"
 
           # Extract individual fields from the JSON response
           release_name=$(echo "$github_response" | jq -r '.data.repository.releases.nodes[0].name')
