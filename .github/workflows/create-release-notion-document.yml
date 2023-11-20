@@ -24,6 +24,10 @@ jobs:
           gem install bundler
           bundle install
 
+      - name: Install jq
+        run: |
+          sudo apt-get install jq
+
       - name: Query GitHub GraphQL API
         id: get-release
         run: |
