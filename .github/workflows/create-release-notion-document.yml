@@ -52,7 +52,7 @@ jobs:
           echo "$github_response"
 
           error_message=$(echo "$github_response" | jq -r '.errors[0].message')
-          if [ ! -z "$error_message" ]; then
+          if [ ! -z "$error_message" ] && [ "$error_message" != "null" ]; then
             echo "Error in GraphQL response: $error_message"
             exit 1
           fi
