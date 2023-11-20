@@ -40,7 +40,8 @@ jobs:
           GRAPHQL
           )
 
-          github_headers="Authorization: Bearer $YOUR_ACCESS_TOKEN
+          github_headers="Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}
+
           Content-Type: application/json
           Accept: application/json"
 
@@ -48,9 +49,6 @@ jobs:
           release_text=$(ruby -e 'require "json"; data = JSON.parse(STDIN.read); puts data["data"]["repository"]["releases"]["nodes"][0]["body"]' <<< "$github_response")
 
           echo "::set-output name=release_text::$release_text"
-        env:
-          YOUR_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Run Script
         run: ruby .github/scripts/create-release-notion-document.rb ${{ env.release_text }}
         env:
