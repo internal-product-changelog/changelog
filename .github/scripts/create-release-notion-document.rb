@@ -17,9 +17,14 @@ headers = {
 # # Open and read the file
 # json_data = File.read(file_path)
 
-release_text = ARGV[0] || ''
-# release_text = json_data
-release_data = JSON.parse(release_text)
+# release_text = ARGV[0] || ''
+# # release_text = json_data
+# release_data = JSON.parse(release_text)
+
+release_name = ENV['RELEASE_NAME']
+release_tag = ENV['RELEASE_TAG']
+release_description = ENV['RELEASE_DESCRIPTION']
+release_created_at = ENV['RELEASE_CREATED_AT']
 
 # Extract information from the release data
 # title = release_data['title'] || ''
@@ -53,7 +58,7 @@ request_body = {
 		title: [
 			{
 			text: {
-				content: 'Name'
+				content: release_name
 			}
 			}
 		],
@@ -62,20 +67,14 @@ request_body = {
 			type: 'multi_select',
 			multi_select: [
 				{
-				name: 'New feature'
+				name: release_tag
 				},
-				{
-					name: 'Enhancement'
-				},
-				{
-				name: 'Bug fixed'
-				}
 			]
 		},
 		'Release date': {
 			type: 'date',
 			date: {
-				"start": "2023-02-23",
+				"start": release_created_at,
 				"end": nil,
 				"time_zone": nil
 			},
@@ -164,7 +163,8 @@ request_body = {
 			rich_text: [
 				{
 				text: {
-					content: "\n\n#{release_data['notes']}\n\n#{release_data['contributors']}",
+					# content: "\n\n#{release_data['notes']}\n\n#{release_data['contributors']}",
+					content: release_description
 				}
 				}
 			],
