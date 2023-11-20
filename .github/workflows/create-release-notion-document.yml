@@ -26,10 +26,10 @@ jobs:
           with:
             ruby-version: 3.2.2
 
-        # - name: Install Dependencies
-        #   run: |
-        #     gem install bundler
-        #     bundle install
+        - name: Install Dependencies
+          run: |
+            gem install bundler
+            bundle install
 
         - name: Query GitHub REST API
           id: get-release
