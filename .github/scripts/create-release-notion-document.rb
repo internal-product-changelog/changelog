@@ -86,7 +86,7 @@ request_body = {
 				name: 'New feature'
 				},
 				{
-					name: 'Enhancement'
+				name: 'Enhancement'
 				},
 				{
 				name: 'Bug fixed'
