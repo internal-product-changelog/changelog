@@ -12,15 +12,22 @@ headers = {
 	'Notion-Version' => '2022-06-28'
 }
 
-release_text = ARGV[0] || ''
-release_data = JSON.parse(release_text)
-puts release_data
-print release_data
+github_response = ARGV[0]
+data = JSON.parse(github_response)
+puts data
+print data
 
-release_name = ENV['RELEASE_NAME']
-release_tag = ENV['RELEASE_TAG']
-release_description = ENV['RELEASE_DESCRIPTION']
-release_created_at = ENV['RELEASE_CREATED_AT']
+# Extract individual fields from the JSON response
+release_name = data['name']
+release_tag = data['tag_name']
+release_description = data['body']
+release_created_at = data['created_at']
+
+# Print or use the extracted fields as needed
+puts "Release Name: #{release_name}"
+puts "Release Tag: #{release_tag}"
+puts "Release Description: #{release_description}"
+puts "Release Created At: #{release_created_at}"
 
 # Extract information from the release data
 # title = release_data['title'] || ''
