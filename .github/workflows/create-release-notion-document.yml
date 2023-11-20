@@ -38,15 +38,4 @@ jobs:
 
         - name: Run Ruby Script
           run: |
-            # Access individual environment variables
-            release_name="${RELEASE_NAME}"
-            release_tag="${RELEASE_TAG}"
-            release_description="${RELEASE_DESCRIPTION}"
-            release_created_at="${RELEASE_CREATED_AT}"
-
-            echo "Release Name: $release_name"
-            echo "Release Tag: $release_tag"
-            echo "Release Description: $release_description"
-            echo "Release Created At: $release_created_at"
-
-            ruby .github/scripts/create-release-notion-document.rb "$release_info"
+            ruby .github/scripts/create-release-notion-document.rb "$github_response"

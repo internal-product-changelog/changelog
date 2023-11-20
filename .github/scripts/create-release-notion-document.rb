@@ -12,15 +12,10 @@ headers = {
 	'Notion-Version' => '2022-06-28'
 }
 
-# file_path = '.github/scripts/sample_release.json'
-
-# # Open and read the file
-# json_data = File.read(file_path)
-
 release_text = ARGV[0] || ''
-# # release_text = json_data
-# release_data = JSON.parse(release_text)
-puts release_text
+release_data = JSON.parse(release_text)
+puts release_data
+print release_data
 
 release_name = ENV['RELEASE_NAME']
 release_tag = ENV['RELEASE_TAG']
