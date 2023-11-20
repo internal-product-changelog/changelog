@@ -52,15 +52,13 @@ jobs:
 
           github_response=$(curl -sS --http1.1 -X POST -H "$github_headers" -d "{\"query\":\"$query\"}" $github_api_url)
           
-          # Set the JSON data as an output
           echo "::set-output name=release_info::$github_response"
 
       - name: Run Ruby Script
         run: |
-          # release_info=$(echo "${{ steps.get-release.outputs.release_info }}" | ruby -e 'require "json"; data = JSON.parse(STDIN.read); puts data["data"]["repository"]["releases"]["nodes"][0]')
-          release_info=$(echo "${{ steps.get-release.outputs.release_info }}" | jq .)
+          release_info=$(echo "${{ steps.get-release.outputs.release_info }}")
 
-          echo "Parsed Release Body:"
+          echo "Raw Release Info:"
           echo "$release_info"
 
           ruby .github/scripts/create-release-notion-document.rb "$release_info"
