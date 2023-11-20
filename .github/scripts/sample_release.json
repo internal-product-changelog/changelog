@@ -1,8 +1,42 @@
 {
-  "title": "# Release Note | v.1.11.104",
-  "new_features": "## New Features\n- Feature 1\n- Feature 2",
-  "enhancements": "## Enhancements\n- Enhancement 1\n- Enhancement 2",
-  "fixed_bugs": "## Fixed Bugs\n- Bug Fix 1\n- Bug Fix 2",
-  "notes": "## Notes\nSome important notes here...",
-  "contributors": "## Contributors\n- John Doe\n- Jane Smith"
+  "url": "https://api.github.com/repos/internal-product-changelog/changelog/releases/130481518",
+  "assets_url": "https://api.github.com/repos/internal-product-changelog/changelog/releases/130481518/assets",
+  "upload_url": "https://uploads.github.com/repos/internal-product-changelog/changelog/releases/130481518/assets{?name,label}",
+  "html_url": "https://github.com/internal-product-changelog/changelog/releases/tag/v.1.11.491",
+  "id": 130481518,
+  "author": {
+    "login": "macarena-varela",
+    "id": 148413763,
+    "node_id": "U_kgDOCNidQw",
+    "avatar_url": "https://avatars.githubusercontent.com/u/148413763?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/macarena-varela",
+    "html_url": "https://github.com/macarena-varela",
+    "followers_url": "https://api.github.com/users/macarena-varela/followers",
+    "following_url": "https://api.github.com/users/macarena-varela/following{/other_user}",
+    "gists_url": "https://api.github.com/users/macarena-varela/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/macarena-varela/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/macarena-varela/subscriptions",
+    "organizations_url": "https://api.github.com/users/macarena-varela/orgs",
+    "repos_url": "https://api.github.com/users/macarena-varela/repos",
+    "events_url": "https://api.github.com/users/macarena-varela/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/macarena-varela/received_events",
+    "type": "User",
+    "site_admin": false
+  },
+  "node_id": "RE_kwDOKtW7W84Hxv1u",
+  "tag_name": "v.1.11.491",
+  "target_commitish": "main",
+  "name": "Release Notes | v.1.11.491",
+  "draft": false,
+  "prerelease": false,
+  "created_at": "2023-11-20T19:46:44Z",
+  "published_at": "2023-11-20T19:48:10Z",
+  "assets": [
+
+  ],
+  "tarball_url": "https://api.github.com/repos/internal-product-changelog/changelog/tarball/v.1.11.491",
+  "zipball_url": "https://api.github.com/repos/internal-product-changelog/changelog/zipball/v.1.11.491",
+  "body": "# 🆕 New features\r\n\r\n## Feature 1\r\n\r\n[HAW-338](https://buk.atlassian.net/browse/HAW-338)\r\n\r\nExplanation text…\r\n\r\n![gympass](https://github.com/internal-product-changelog/changelog/assets/148413763/a5432d30-28fa-416f-a082-26acd3a424fe)\r\n\r\n\r\n# 🚀 Enhancements\r\n\r\n## Enhancement 1\r\n\r\n[HAW-338](https://buk.atlassian.net/browse/HAW-338)\r\n\r\nExplanation text…\r\n\r\n\r\n# 🐞 Fixed bugs\r\n\r\n## Fix 1\r\n\r\n[HAW-338](https://buk.atlassian.net/browse/HAW-338)\r\n\r\nExplanation text…\r\n\r\n\r\n# 📝 Notes\r\n\r\nNotes text: tips, warnings, etc…\r\n\r\n\r\n# 👨🏻‍💻 Contributors\r\n\r\nContributors | Questions and/or comments | Who asks?\r\n-- | -- | --\r\n@macarena-varela  👩🏻‍💻 |   | ",
+  "mentions_count": 1
 }
