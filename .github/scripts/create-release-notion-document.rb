@@ -101,7 +101,7 @@ request_body = {
 			rich_text: [
 			{
 				text: {
-				content: "#{release_data['new_features']}"
+				content: ""
 				}
 			}
 			]
@@ -126,7 +126,7 @@ request_body = {
 			rich_text: [
 				{
 				text: {
-					content: "#{release_data['enhancements']}"
+					content: ""
 				}
 				}
 			]
@@ -151,7 +151,7 @@ request_body = {
 			rich_text: [
 				{
 				text: {
-					content: "#{release_data['fixed_bugs']}"
+					content: ""
 				}
 				}
 			]
