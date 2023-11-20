@@ -7,7 +7,7 @@ on:
 
 
 jobs:
-    use_api:
+    create-notion-release-document:
       runs-on: ubuntu-latest
 
       steps:
@@ -24,7 +24,7 @@ jobs:
             gem install bundler
             bundle install
 
-        - name: Query GitHub REST API
+        - name: Query GitHub REST API and Run Ruby Script
           id: get-release
           run: |
             github_api_url="https://api.github.com/repos/internal-product-changelog/changelog/releases/latest"
@@ -34,8 +34,6 @@ jobs:
             github_response=$(curl -sS --http1.1 -H "$github_headers" $github_api_url)
             
             echo "Raw GitHub API Response:"
-            echo "$github_response"            
+            echo "$github_response"
 
-        - name: Run Ruby Script
-          run: |
             ruby .github/scripts/create-release-notion-document.rb "$github_response"
