@@ -7,10 +7,17 @@ on:
 
 
 jobs:
-  create-release-notion:
-    runs-on: ubuntu-latest
+    use_api:
+      runs-on: ubuntu-latest
+      permissions:
+        issues: read
 
     steps:
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api repos/internal-product-changelog/changelog/releases/latest
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -19,19 +26,19 @@ jobs:
         with:
           ruby-version: 3.2.2
 
-      - name: Install Dependencies
-        run: |
-          gem install bundler
-          bundle install
+      # - name: Install Dependencies
+      #   run: |
+      #     gem install bundler
+      #     bundle install
 
       - name: Query GitHub REST API
         id: get-release
         run: |
-          github_api_url="https://api.github.com/repos/internal-product-changelog/changelog/releases"
+          github_api_url="https://api.github.com/repos/internal-product-changelog/changelog/releases/latest"
 
-          github_token="${{ secrets.YOUR_ACCESS_TOKEN }}"
+          github_token="${{ secrets.GH_TOKEN }}"
           github_headers="Authorization: Bearer $github_token
-                          Accept: application/vnd.github+json
+                          Accept: application/vnd.github.v3+json
                           X-GitHub-Api-Version: 2022-11-28"
           github_response=$(curl -sS --http1.1 -H "$github_headers" $github_api_url)
           
