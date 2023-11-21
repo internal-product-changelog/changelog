@@ -14,12 +14,12 @@ headers = {
 }
 
 ## Read JSON data from a file
-file_path = '.github/scripts/sample_release.json'
+# file_path = '.github/scripts/sample_release.json'
 
 ## Open and read the file
-github_response = File.read(file_path)
+# github_response = File.read(file_path)
 
-# github_response = ARGV[0]
+github_response = ARGV[0]
 data = JSON.parse(github_response)
 
 # Extract individual fields from the JSON response
