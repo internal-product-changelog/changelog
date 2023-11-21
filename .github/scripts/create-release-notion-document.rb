@@ -131,20 +131,6 @@ request_body = {
 			type: 'multi_select',
 			multi_select: changes
 		},
-		'Modules': {
-			type: 'multi_select',
-			multi_select: [
-				{
-					name: 'Beneficios'
-				},
-				{
-					name: 'Publicar'
-				},
-				{
-					name: 'Instancias'
-				}
-			]
-		},
 		'URL': {
 			"rich_text": [
 				{
