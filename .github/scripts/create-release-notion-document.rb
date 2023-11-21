@@ -1,5 +1,6 @@
 require 'rest-client'
 require 'json'
+require_relative 'process-block-types'
 
 NOTION_API_ENDPOINT = 'https://api.notion.com/v1/pages'
 NOTION_DATABASE_ID = '8b7bd720c2d043698ecaea9a8d5adb16'
@@ -13,12 +14,12 @@ headers = {
 }
 
 # Read JSON data from a file
-file_path = '.github/scripts/sample_release.json'
+# file_path = '.github/scripts/sample_release.json'
 
 # Open and read the file
-github_response = File.read(file_path)
+# github_response = File.read(file_path)
 
-# github_response = ARGV[0]
+github_response = ARGV[0]
 data = JSON.parse(github_response)
 
 # Extract individual fields from the JSON response
@@ -27,36 +28,42 @@ release_tag = data['tag_name']
 release_description = data['body']
 release_created_at = data['created_at']
 
+
 new_data = {}
 
-# Extracting headings and their content
+#Extracting headings and their content
 release_description.scan(/^#\s+(.*?)\s*\n(.*?)(?=(?:^#\s+|\z))/m) do |heading, content|
-	puts heading, content
-  	new_data[heading.strip.downcase] = content.strip
+  	new_data[heading.strip] = content.strip
 end
 
-puts new_data
-
-# Extract information from the release data
-# new_features = sections[0] || ''
-# new_features_details = sections[1] || ''
-# enhancements = sections[2] || ''
-# enhancements_details = sections[3] || ''
-# fixed_bugs = sections[4] || ''
-# fixed_bugs_details = sections[5] || ''
-# notes = sections[6] || ''
-# notes_details = sections[7] || ''
-# contributors = sections[8] || ''
-# contributors_details = sections[9] || ''
-
 # Datatable
+## Check what kind of changes have been done in the release
 changes = []
 if 'New feature' in release_description
 	changes.append({ name: 'New features' })
-elsif 'Enhancement' in release_description
+end
+if 'Enhancement' in release_description
 	changes.append({ name: 'Enhancements' })
-elsif 'Bug fixed' in release_description
+end
+if 'Bug fixed' in release_description
 	changes.append({ name: 'Bugs fixed' })
+end
+
+## Check if it's a production or staging release
+if release_tag.include?('v')
+	url_env = {
+		"content": "Hawaii PROD",
+		"link": {
+			url: 'https://hawaii.buk.cl'
+		}
+	}	
+elsif release_tag.include?('rc')
+	url_env = {
+		"content": "Hawaii STAGE",
+		"link": {
+			url: 'https://stag.hawaii.buk.cl/'
+		}
+	}
 end
 
 # Page content
@@ -64,29 +71,23 @@ page_content = []
 new_data.each do |heading, content|
 	page_content.append({
 		object: 'block',
-		heading_2: {
-			rich_text: [
-				{
-					text: {
-						content: heading
-					}
-				}
-			]
+		heading_1: {
+		  rich_text: [
+			{
+			  text: {
+				content: heading
+			  }
+			}
+		  ]
 		}
-	})
-	page_content.append({
-		object: 'block',
-		paragraph: {
-			rich_text: [
-				{
-					text: {
-						content: content,
-					}
-				}
-			],
-			color: 'default'
-		}
-	})
+	  })
+	content_list = content.scan(/(\#\# [^\r\n]+|\[.*?\]\([^\)]+\)|[^\r\n]+)/).flatten
+	content_list.each do |item|
+		categorize_item = process_content(item)
+		unless categorize_item.nil?
+			page_content.append(categorize_item)
+		end
+	end
 end
 
 # Create Notion page
@@ -104,9 +105,9 @@ request_body = {
 		id: '',
 		title: [
 			{
-			text: {
-				content: release_name
-			}
+				text: {
+					content: release_name
+				}
 			}
 		],
 		},
@@ -129,12 +130,40 @@ request_body = {
 		'Changes': {
 			type: 'multi_select',
 			multi_select: changes
+		},
+		'Modules': {
+			type: 'multi_select',
+			multi_select: [
+				{
+					name: 'Beneficios'
+				},
+				{
+					name: 'Publicar'
+				},
+				{
+					name: 'Instancias'
+				}
+			]
+		},
+		'URL': {
+			"rich_text": [
+				{
+				  "type": "text",
+				  "text": url_env,
+				  "annotations": {
+					"bold": true,
+					"italic": false,
+					"strikethrough": false,
+					"underline": false,
+					"code": false,
+					"color": "default"
+				  },
+				}
+			  ]
 		}
 	},
 	children: page_content
 }
-
-puts request_body
 
 begin
 response = RestClient.post(NOTION_API_ENDPOINT, request_body.to_json, headers)
