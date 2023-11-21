@@ -65,13 +65,13 @@ end
 # Datatable
 ## Check what kind of changes have been done in the release
 changes = []
-if 'New feature' in release_description
+if release_description.include?('New features') 
 	changes.append({ name: 'New features' })
 end
-if 'Enhancement' in release_description
+if release_description.include?('Enhancements')
 	changes.append({ name: 'Enhancements' })
 end
-if 'Bug fixed' in release_description
+if release_description.include?('Bugs fixed')
 	changes.append({ name: 'Bugs fixed' })
 end
 
