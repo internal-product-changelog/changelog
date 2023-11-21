@@ -14,12 +14,12 @@ headers = {
 }
 
 ## Read JSON data from a file
-#file_path = '.github/scripts/sample_release.json'
+file_path = '.github/scripts/sample_release.json'
 
 ## Open and read the file
-#github_response = File.read(file_path)
+github_response = File.read(file_path)
 
-github_response = ARGV[0]
+# github_response = ARGV[0]
 data = JSON.parse(github_response)
 
 # Extract individual fields from the JSON response
@@ -65,13 +65,13 @@ end
 # Datatable
 ## Check what kind of changes have been done in the release
 changes = []
-if release_description.include?('New features') 
+unless new_data['🆕 New features'].nil?
 	changes.append({ name: 'New features' })
 end
-if release_description.include?('Enhancements')
+unless new_data['🚀 Enhancements'].nil?
 	changes.append({ name: 'Enhancements' })
 end
-if release_description.include?('Bugs fixed')
+unless new_data['🐞 Bugs fixed'].nil?
 	changes.append({ name: 'Bugs fixed' })
 end
 
