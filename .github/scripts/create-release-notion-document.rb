@@ -13,11 +13,11 @@ headers = {
 	'Notion-Version' => '2022-06-28'
 }
 
-# Read JSON data from a file
-# file_path = '.github/scripts/sample_release.json'
+## Read JSON data from a file
+#file_path = '.github/scripts/sample_release.json'
 
-# Open and read the file
-# github_response = File.read(file_path)
+## Open and read the file
+#github_response = File.read(file_path)
 
 github_response = ARGV[0]
 data = JSON.parse(github_response)
@@ -27,6 +27,32 @@ release_name = data['name']
 release_tag = data['tag_name']
 release_description = data['body']
 release_created_at = data['created_at']
+
+table_data = [{
+    'type': 'table_row',
+    'table_row': {
+        'cells': [
+            [
+                {
+                    'type': 'text', 
+                    'text': {'content': 'Contributor'},
+                },
+            ],
+            [
+                {
+                    'type': 'text', 
+                    'text': {'content': 'Questions and/or comments'},
+                }, 
+            ],
+            [
+                {
+                    'type': 'text', 
+                    'text': {'content': 'Who asks?'},
+                }, 
+            ]
+        ]
+    }
+}]
 
 
 new_data = {}
@@ -82,11 +108,16 @@ new_data.each do |heading, content|
 		}
 	  })
 	content_list = content.scan(/(\#\# [^\r\n]+|\[.*?\]\([^\)]+\)|[^\r\n]+)/).flatten
-	content_list.each do |item|
-		categorize_item = process_content(item)
-		unless categorize_item.nil?
-			page_content.append(categorize_item)
+
+	if content_list.include?('Contributors | Questions and/or comments | Who asks?')
+		categorize_item = process_content(content_list[2..-1], table_data)
+	else
+		content_list.each do |item|
+			categorize_item = process_content(item, table_data)
 		end
+	end
+	unless categorize_item.nil?
+		page_content.append(categorize_item)
 	end
 end
 

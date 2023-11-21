@@ -1,9 +1,9 @@
 {
-  "url": "https://api.github.com/repos/internal-product-changelog/changelog/releases/130481518",
-  "assets_url": "https://api.github.com/repos/internal-product-changelog/changelog/releases/130481518/assets",
-  "upload_url": "https://uploads.github.com/repos/internal-product-changelog/changelog/releases/130481518/assets{?name,label}",
-  "html_url": "https://github.com/internal-product-changelog/changelog/releases/tag/v.1.11.491",
-  "id": 130481518,
+  "url": "https://api.github.com/repos/internal-product-changelog/changelog/releases/130682270",
+  "assets_url": "https://api.github.com/repos/internal-product-changelog/changelog/releases/130682270/assets",
+  "upload_url": "https://uploads.github.com/repos/internal-product-changelog/changelog/releases/130682270/assets{?name,label}",
+  "html_url": "https://github.com/internal-product-changelog/changelog/releases/tag/v.1.11.493",
+  "id": 130682270,
   "author": {
     "login": "macarena-varela",
     "id": 148413763,
@@ -24,19 +24,19 @@
     "type": "User",
     "site_admin": false
   },
-  "node_id": "RE_kwDOKtW7W84Hxv1u",
-  "tag_name": "v.1.11.491",
+  "node_id": "RE_kwDOKtW7W84Hyg2e",
+  "tag_name": "v.1.11.493",
   "target_commitish": "main",
-  "name": "Release Notes | v.1.11.491",
+  "name": "Release Notes | v.1.11.493",
   "draft": false,
   "prerelease": false,
-  "created_at": "2023-11-20T19:46:44Z",
-  "published_at": "2023-11-20T19:48:10Z",
+  "created_at": "2023-11-21T15:12:03Z",
+  "published_at": "2023-11-21T15:19:04Z",
   "assets": [
 
   ],
-  "tarball_url": "https://api.github.com/repos/internal-product-changelog/changelog/tarball/v.1.11.491",
-  "zipball_url": "https://api.github.com/repos/internal-product-changelog/changelog/zipball/v.1.11.491",
-  "body": "# 🆕 New features\r\n\r\n## Feature 1\r\n\r\n[HAW-338](https://buk.atlassian.net/browse/HAW-338)\r\n\r\nExplanation text…\r\n\r\n![gympass](https://github.com/internal-product-changelog/changelog/assets/148413763/a5432d30-28fa-416f-a082-26acd3a424fe)\r\n\r\n\r\n# 🚀 Enhancements\r\n\r\n## Enhancement 1\r\n\r\n[HAW-338](https://buk.atlassian.net/browse/HAW-338)\r\n\r\nExplanation text…\r\n\r\n\r\n# 🐞 Fixed bugs\r\n\r\n## Fix 1\r\n\r\n[HAW-338](https://buk.atlassian.net/browse/HAW-338)\r\n\r\nExplanation text…\r\n\r\n\r\n# 📝 Notes\r\n\r\nNotes text: tips, warnings, etc…\r\n\r\n\r\n# 👨🏻‍💻 Contributors\r\n\r\nContributors | Questions and/or comments | Who asks?\r\n-- | -- | --\r\n@macarena-varela  👩🏻‍💻 |   | ",
+  "tarball_url": "https://api.github.com/repos/internal-product-changelog/changelog/tarball/v.1.11.493",
+  "zipball_url": "https://api.github.com/repos/internal-product-changelog/changelog/zipball/v.1.11.493",
+  "body": "# 🆕 New features\r\n\r\n## Feature 1\r\n\r\n[HAW-338](https://buk.atlassian.net/browse/HAW-338)\r\n\r\nAquí se hizo tal y tal funcionalidad. Texto de prueba.\r\n\r\n![gympass logo](https://github.com/internal-product-changelog/changelog/assets/148413763/a5432d30-28fa-416f-a082-26acd3a424fe)\r\n\r\n## Feature 2\r\n\r\n[HAW-339](https://buk.atlassian.net/browse/HAW-339)\r\n\r\nPor otro lado, se desarrolló esto. Permitirá que los usuarios hagan...\r\n\r\n![cinemark logo](https://github.com/internal-product-changelog/changelog/assets/148413763/d75c9ef7-f37e-403a-8eb5-eaee21bed03a)\r\n\r\n\r\n# 🐞 Fixed bugs\r\n\r\n## Fix 1\r\n\r\n[HAW-340](https://buk.atlassian.net/browse/HAW-340)\r\n\r\nSe corrigió el error de XX, con esto se podrá...\r\n\r\n\r\n# 📝 Notes\r\n\r\nTener cuidado al ..., pues puede ocasionar... Queda pendiente ese arreglo.\r\n\r\n\r\n# 👨🏻‍💻 Contributors\r\n\r\nContributors | Questions and/or comments | Who asks?\r\n-- | -- | --\r\n@macarena-varela  👩🏻‍💻 |   | \r\n@macarena-varela  👩🏻‍💻 |   | \r\n@macarena-varela  👩🏻‍💻 |   | ",
   "mentions_count": 1
 }

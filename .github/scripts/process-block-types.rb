@@ -1,32 +1,6 @@
-TABLE_DATA = [{
-    'type': 'table_row',
-    'table_row': {
-        'cells': [
-            [
-                {
-                    'type': 'text', 
-                    'text': {'content': 'Contributor'},
-                },
-            ],
-            [
-                {
-                    'type': 'text', 
-                    'text': {'content': 'Questions and/or comments'},
-                }, 
-            ],
-            [
-                {
-                    'type': 'text', 
-                    'text': {'content': 'Who asks?'},
-                }, 
-            ]
-        ]
-    }
-}]
-
 # Function to check if content is a table
-def is_table?(content)
-  content.include?('|') && content.start_with?('@')
+def is_table?(content_list)
+    content_list.any? { |element| element.include?("|") } 
 end
 
 # Function to check if content is a heading_2
@@ -47,56 +21,65 @@ end
 # Process paragraph content
 def is_paragraph?(content)
     # Customize the conditions for identifying a paragraph
-    !content.start_with?('@') && !content.match(/\[.*\]\(.*\)/) && !content.start_with?('##') && !content.include?("|")
-  end
+    !content.match(/\[.*\]\(.*\)/) && !content.start_with?('##') && !content.include?("|")
+end
 
 # Process content based on type
-def process_content(content)
-  case
-    when is_table?(content)
-        process_table(content, TABLE_DATA)
-    when is_heading_2?(content)
-        process_heading_2(content)
-    when is_file?(content)
-        process_file(content)
-    when is_link?(content)
-        process_link(content)
-    when is_paragraph?(content)
-        process_paragraph(content)
-  end
+def process_content(content, table_data)
+    if content.is_a?(Array)
+        if is_table?(content)
+            process_table(content, table_data)
+        end
+    else
+        case
+          when is_heading_2?(content)
+              process_heading_2(content)
+          when is_file?(content)
+              process_file(content)
+          when is_link?(content)
+              process_link(content)
+          when is_paragraph?(content)
+              process_paragraph(content)
+        end
+    end
 end
 
 # Process table content
 def process_table(content, table_data)
-    unless content.include?('Contributors | Questions and/or comments | Who asks?')
-        contributors_regex = content.scan(/@([^|\s]+)\s+👩🏻‍💻\s*\|\s*(.*?)\s*\|\s*(.*?)\s*$/)
-        contributors_regex.each do |match|
-            username, comments, who_asks = match
-            table_data.append({
-                'type': 'table_row',
-                'table_row': {
-                    'cells': [
-                        [
-                            {
-                                'type': 'text', 
-                                'text': {'content': username},
-                            },
-                        ],
-                        [
-                            {
-                                'type': 'text', 
-                                'text': {'content': comments.strip},
-                            }, 
-                        ],
-                        [
-                            {
-                                'type': 'text', 
-                                'text': {'content': who_asks.strip},
-                            }, 
+    content.each do |row|
+        cols = row.split('|')
+        cols.each do |elem|
+            user, comments, who_asks = elem
+            if user.start_with?('@')
+                git_user = row.match(/@(.+?)\s/)
+                response = RestClient.get('https://api.github.com/users/' << git_user[1])
+                username = JSON.parse(response)['name']
+                table_data.append({
+                    'type': 'table_row',
+                    'table_row': {
+                        'cells': [
+                            [
+                                {
+                                    'type': 'text', 
+                                    'text': {'content': username || ''},
+                                },
+                            ],
+                            [
+                                {
+                                    'type': 'text', 
+                                    'text': {'content': comments || ''},
+                                }, 
+                            ],
+                            [
+                                {
+                                    'type': 'text', 
+                                    'text': {'content': who_asks || ''},
+                                }, 
+                            ]
                         ]
-                    ]
-                }
-            })
+                    }
+                })
+            end
         end
     end
 
