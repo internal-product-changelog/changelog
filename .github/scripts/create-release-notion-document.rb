@@ -13,13 +13,13 @@ headers = {
 	'Notion-Version' => '2022-06-28'
 }
 
-# # Read JSON data from a file
-# file_path = '.github/scripts/sample_release.json'
+## Read JSON data from a file
+file_path = '.github/scripts/sample_release.json'
 
-# # Open and read the file
-# github_response = File.read(file_path)
+## Open and read the file
+github_response = File.read(file_path)
 
-github_response = ARGV[0]
+# github_response = ARGV[0]
 data = JSON.parse(github_response)
 
 # Extract individual fields from the JSON response
@@ -65,13 +65,13 @@ end
 # Datatable
 ## Check what kind of changes have been done in the release
 changes = []
-unless new_data['🆕 New features'].nil?
+unless new_data['New features 🆕'].nil?
 	changes.append({ name: 'New features' })
 end
-unless new_data['🚀 Enhancements'].nil?
+unless new_data['Enhancements 🚀'].nil?
 	changes.append({ name: 'Enhancements' })
 end
-unless new_data['🐞 Bugs fixed'].nil?
+unless new_data['Bugs fixed 🐞'].nil?
 	changes.append({ name: 'Bugs fixed' })
 end
 
