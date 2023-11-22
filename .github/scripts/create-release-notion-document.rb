@@ -13,10 +13,10 @@ headers = {
 	'Notion-Version' => '2022-06-28'
 }
 
-## Read JSON data from a file
+# # Read JSON data from a file
 # file_path = '.github/scripts/sample_release.json'
 
-## Open and read the file
+# # Open and read the file
 # github_response = File.read(file_path)
 
 github_response = ARGV[0]
@@ -111,13 +111,16 @@ new_data.each do |heading, content|
 
 	if content_list.include?('Contributors | Questions and/or comments | Who asks?')
 		categorize_item = process_content(content_list[2..-1], table_data)
+		unless categorize_item.nil?
+			page_content.append(categorize_item)
+		end
 	else
 		content_list.each do |item|
 			categorize_item = process_content(item, table_data)
+			unless categorize_item.nil?
+				page_content.append(categorize_item)
+			end
 		end
-	end
-	unless categorize_item.nil?
-		page_content.append(categorize_item)
 	end
 end
 
