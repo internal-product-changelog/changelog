@@ -1,0 +1,22 @@
+name: Generate Release and Release Notes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-release-notes:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up GitHub CLI
+      uses: actions/setup-gh@v1
+      with:
+        cli-version: latest
+
+    - name: Generate Release Notes
+      run: gh release create "$(git describe --tags --abbrev=0)" -n "$(cat release-notes.md)"

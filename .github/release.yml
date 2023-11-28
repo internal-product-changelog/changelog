@@ -15,6 +15,7 @@ changelog:
       labels:
         - bug-fixed
     - title: Notes 📝
-    - title: Other Changes
+      labels: notes
+    - title: Other Changes 👾
       labels:
         - "*"
