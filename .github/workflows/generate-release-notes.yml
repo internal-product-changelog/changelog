@@ -19,4 +19,5 @@ jobs:
         cli-version: latest
 
     - name: Generate Release Notes
-      run: gh release create "$(git describe --tags --abbrev=0)" -n "$(cat release-notes.md)"
+      id: release-notes
+      run: echo "::set-output name=release_notes::$(cat release-notes.md)"
