@@ -23,7 +23,8 @@ github_response = ARGV[0]
 data = JSON.parse(github_response)
 
 # Extract individual fields from the JSON response
-release_name = data['name']
+release_name = 'Release Notes | ' << data['name']
+release_title = ''
 release_tag = data['tag_name']
 release_description = data['body']
 release_created_at = data['created_at']
@@ -57,9 +58,14 @@ table_data = [{
 
 new_data = {}
 
-#Extracting headings and their content
-release_description.scan(/^#\s+(.*?)\s*\n(.*?)(?=(?:^#\s+|\z))/m) do |heading, content|
-  	new_data[heading.strip] = content.strip
+# Extracting headings and titles with their content
+release_description.scan(/^(#+)\s+(.*?)\s*\n(.*?)(?=(?:^###\s+|^#\s+|\z))/m) do |level, title, content|
+  if level == '###'
+    new_data[title.strip] = content.strip
+elsif level == '##'
+	release_title = title.strip
+    # Handle # titles if needed
+  end
 end
 
 # Datatable
@@ -71,7 +77,7 @@ end
 unless new_data['Enhancements 🚀'].nil?
 	changes.append({ name: 'Enhancements' })
 end
-unless new_data['Bugs fixed 🐞'].nil?
+unless new_data['Bugs Fixed 🐞'].nil?
 	changes.append({ name: 'Bugs fixed' })
 end
 
@@ -93,11 +99,24 @@ elsif release_tag.include?('rc')
 end
 
 # Page content
-page_content = []
+page_content = [
+	{
+		object: 'block',
+		heading_1: {
+		  rich_text: [
+			{
+			  text: {
+				content: release_title
+			  }
+			}
+		  ]
+		}
+	}
+]
 new_data.each do |heading, content|
 	page_content.append({
 		object: 'block',
-		heading_1: {
+		heading_2: {
 		  rich_text: [
 			{
 			  text: {
@@ -115,8 +134,11 @@ new_data.each do |heading, content|
 			page_content.append(categorize_item)
 		end
 	else
-		content_list.each do |item|
-			categorize_item = process_content(item, table_data)
+		content_list.each_with_index do |item, index|
+			if item.include?("**Full Changelog**")
+				page_content.append(process_divider)
+			end
+			categorize_item = process_content(item)
 			unless categorize_item.nil?
 				page_content.append(categorize_item)
 			end
