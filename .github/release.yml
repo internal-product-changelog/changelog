@@ -5,7 +5,7 @@ changelog:
     labels:
       - ignore-for-release
   categories:
-    - title: New Features 🆕
+    - title: New features 🆕
       labels:
         - new-feature
     - title: Enhancements 🚀
@@ -14,9 +14,9 @@ changelog:
     - title: Bugs fixed 🐞
       labels:
         - bug-fixed
-    - title: Notes 📝
+    - title: Documentation 📜
       labels:
-        - notes
+        - documentation
     - title: Other Changes 👾
       labels:
         - "*"
