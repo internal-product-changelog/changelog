@@ -77,7 +77,7 @@ end
 unless new_data['Enhancements 🚀'].nil?
 	changes.append({ name: 'Enhancements' })
 end
-unless new_data['Bugs Fixed 🐞'].nil?
+unless new_data['Bugs fixed 🐞'].nil?
 	changes.append({ name: 'Bugs fixed' })
 end
 
