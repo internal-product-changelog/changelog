@@ -3,8 +3,10 @@ require 'json'
 require_relative 'process-block-types'
 
 NOTION_API_ENDPOINT = 'https://api.notion.com/v1/pages'
-NOTION_DATABASE_ID = '8b7bd720c2d043698ecaea9a8d5adb16'
-NOTION_API_TOKEN = 'secret_2fTj1Crwbhou0S0obTBvdvYHrZRf2U7VhlP8oK2FKfx'
+# NOTION_DATABASE_ID = '8b7bd720c2d043698ecaea9a8d5adb16'
+NOTION_DATABASE_ID = '2867a5ef2b26410eaf9550e8d9fb7fb8'
+# NOTION_API_TOKEN = 'secret_2fTj1Crwbhou0S0obTBvdvYHrZRf2U7VhlP8oK2FKfx'
+NOTION_API_TOKEN = 'secret_ENTu20TKm4Afmkh7WzY2wqZMtZCfSXfSy0qfBgJiAL8'
 
 # Create Notion API headers with integration token
 headers = {
