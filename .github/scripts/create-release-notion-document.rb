@@ -3,10 +3,10 @@ require 'json'
 require_relative 'process-block-types'
 
 NOTION_API_ENDPOINT = 'https://api.notion.com/v1/pages'
-# NOTION_DATABASE_ID = '8b7bd720c2d043698ecaea9a8d5adb16'
-NOTION_DATABASE_ID = '86d77f32e0284be694bcff207a70ad97'
-# NOTION_API_TOKEN = 'secret_2fTj1Crwbhou0S0obTBvdvYHrZRf2U7VhlP8oK2FKfx'
-NOTION_API_TOKEN = 'secret_ENTu20TKm4Afmkh7WzY2wqZMtZCfSXfSy0qfBgJiAL8'
+NOTION_DATABASE_ID = '8b7bd720c2d043698ecaea9a8d5adb16'
+# NOTION_DATABASE_ID = '86d77f32e0284be694bcff207a70ad97' #hawaii notion
+NOTION_API_TOKEN = 'secret_2fTj1Crwbhou0S0obTBvdvYHrZRf2U7VhlP8oK2FKfx'
+# NOTION_API_TOKEN = 'secret_ENTu20TKm4Afmkh7WzY2wqZMtZCfSXfSy0qfBgJiAL8' #hawaii notion
 
 # Create Notion API headers with integration token
 headers = {
@@ -16,12 +16,12 @@ headers = {
 }
 
 ## Read JSON data from a file
-#file_path = '.github/scripts/sample_release.json'
+file_path = '.github/scripts/sample_release.json'
 
 ## Open and read the file
-#github_response = File.read(file_path)
+github_response = File.read(file_path)
 
-github_response = ARGV[0]
+#github_response = ARGV[0]
 data = JSON.parse(github_response)
 
 # Extract individual fields from the JSON response
